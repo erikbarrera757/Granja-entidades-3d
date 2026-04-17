@@ -8,11 +8,13 @@ public class GameManager : MonoBehaviour
 
     public int totalEnergy = 0;
     public int stability = 100;
+    public int winEnergy = 100;
 
     public TextMeshProUGUI energyText;
     public TextMeshProUGUI stabilityText;
     public GameObject gameOverText;
     public GameObject restartText;
+    public GameObject victoryText;
 
     private bool isGameOver = false;
 
@@ -32,11 +34,9 @@ public class GameManager : MonoBehaviour
     {
         UpdateUI();
 
-        if (gameOverText != null)
-            gameOverText.SetActive(false);
-
-        if (restartText != null)
-            restartText.SetActive(false);
+        if (gameOverText != null) gameOverText.SetActive(false);
+        if (restartText != null) restartText.SetActive(false);
+        if (victoryText != null) victoryText.SetActive(false);
     }
 
     void Update()
@@ -53,6 +53,11 @@ public class GameManager : MonoBehaviour
 
         totalEnergy += amount;
         UpdateUI();
+
+        if (totalEnergy >= winEnergy)
+        {
+            Victory();
+        }
     }
 
     public void LoseStability(int amount)
@@ -74,15 +79,22 @@ public class GameManager : MonoBehaviour
     {
         isGameOver = true;
 
-        if (gameOverText != null)
-            gameOverText.SetActive(true);
-
-        if (restartText != null)
-            restartText.SetActive(true);
+        if (gameOverText != null) gameOverText.SetActive(true);
+        if (restartText != null) restartText.SetActive(true);
 
         Time.timeScale = 0f;
-
         Debug.Log("GAME OVER");
+    }
+
+    void Victory()
+    {
+        isGameOver = true;
+
+        if (victoryText != null) victoryText.SetActive(true);
+        if (restartText != null) restartText.SetActive(true);
+
+        Time.timeScale = 0f;
+        Debug.Log("VICTORIA");
     }
 
     void RestartGame()
