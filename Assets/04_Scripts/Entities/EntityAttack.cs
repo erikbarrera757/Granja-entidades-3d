@@ -35,6 +35,7 @@ public class EntityAttack : MonoBehaviour
             GameManager.Instance.LoseStability(damage);
 
             CharacterController cc = player.GetComponent<CharacterController>();
+
             if (cc != null)
             {
                 cc.enabled = false;

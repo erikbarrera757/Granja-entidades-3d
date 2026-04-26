@@ -8,15 +8,18 @@ public class PlayerMovement : MonoBehaviour
     public Transform playerBody;
 
     float xRotation = 0f;
+    CharacterController controller;
+
 
     void Start()
     {
+        controller = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()
     {
-        // Movimiento del mouse
+        // Mouse
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
@@ -26,12 +29,12 @@ public class PlayerMovement : MonoBehaviour
         Camera.main.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         playerBody.Rotate(Vector3.up * mouseX);
 
-        // Movimiento WASD
+        // Movimiento
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
         Vector3 move = transform.right * x + transform.forward * z;
 
-        GetComponent<CharacterController>().Move(move * speed * Time.deltaTime);
+        controller.Move(move * speed * Time.deltaTime);
     }
 }

@@ -7,6 +7,7 @@ public class EntityMovement : MonoBehaviour
     private Transform player;
     private EntityStatus entityStatus;
 
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
