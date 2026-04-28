@@ -11,7 +11,7 @@ public class EntityStatus : MonoBehaviour
 
     public float timer = 0f;
     public float interval = 5f;
-
+    public Corral currentCorral;
     private Renderer entityRenderer;
 
     public LightReactionType lightReaction = LightReactionType.Calm;
@@ -94,7 +94,20 @@ public class EntityStatus : MonoBehaviour
     public void IncreaseNeeds()
     {
         bool isNight = DayNightCycle.Instance != null && DayNightCycle.Instance.IsNight;
+        int dangerIncrease = 10;
+        int energyIncrease = 2;
 
+        if (currentCorral != null)
+        {
+            if (currentCorral.level == 2)
+            {
+                dangerIncrease -= 3; // menos peligro
+            }
+            else if (currentCorral.level == 3)
+            {
+                energyIncrease += 5; // más producción
+            }
+        }
         if (isNight)
         {
             // NOCHE: se vuelven peligrosas y hambrientas

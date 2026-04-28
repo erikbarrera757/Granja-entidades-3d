@@ -11,7 +11,8 @@ public class ShopManager : MonoBehaviour
     private bool shopOpen = false;
     public GameObject entityPrefab;
     public Corral[] corrals;
-
+    public int corralUpgradeCost = 50;
+    public Corral selectedCorral;
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.T))
@@ -83,6 +84,19 @@ public class ShopManager : MonoBehaviour
         else
         {
             Debug.Log("No tienes suficiente energía");
+        }
+    }
+    public void UpgradeCorral()
+    {
+        if (selectedCorral == null)
+        {
+            Debug.Log("Selecciona un corral");
+            return;
+        }
+
+        if (GameManager.Instance.SpendEnergy(corralUpgradeCost))
+        {
+            selectedCorral.Upgrade();
         }
     }
 }

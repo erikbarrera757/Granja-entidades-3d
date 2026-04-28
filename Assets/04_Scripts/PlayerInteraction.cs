@@ -16,7 +16,7 @@ public class PlayerInteraction : MonoBehaviour
 
     private string temporaryMessage = "";
     private bool showingTemporaryMessage = false;
-
+    private bool cursorUnlocked = false;
     void Awake()
     {
         Instance = this;
@@ -32,6 +32,10 @@ public class PlayerInteraction : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            ToggleCursor();
+        }
         int currentSlot = -1;
 
         if (hotbarUI != null)
@@ -56,8 +60,31 @@ public class PlayerInteraction : MonoBehaviour
         Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
         RaycastHit hit;
 
+        CorralUI corralUI = Object.FindFirstObjectByType<CorralUI>();
+
         if (Physics.Raycast(ray, out hit, interactionDistance))
         {
+            Debug.Log("Raycast golpeó: " + hit.collider.name);
+            // Detectar corral
+            Corral corral = hit.collider.GetComponentInParent<Corral>();
+
+            if (corral != null)
+            {
+                if (corralUI != null)
+                    corralUI.ShowCorral(corral);
+
+                if (interactionText != null)
+                    interactionText.text = "";
+
+                return;
+            }
+            else
+            {
+                if (corralUI != null)
+                    corralUI.Hide();
+            }
+
+            // Detectar entidad
             if (hit.collider.CompareTag("Entity"))
             {
                 EntityStatus entity = hit.collider.GetComponent<EntityStatus>();
@@ -86,13 +113,11 @@ public class PlayerInteraction : MonoBehaviour
                     if (interactionText != null)
                         interactionText.text = actionsText;
 
-                    // Alimentar
                     if (Input.GetKeyDown(KeyCode.E))
                     {
                         entity.Feed();
                     }
 
-                    // Extraer energía
                     if (Input.GetKeyDown(KeyCode.R))
                     {
                         int energy = entity.ExtractEnergy();
@@ -103,13 +128,11 @@ public class PlayerInteraction : MonoBehaviour
                         }
                     }
 
-                    // Linterna en slot 1
                     if (hasFlashlight && currentSlot == 0 && Input.GetMouseButton(0))
                     {
                         entity.ReactToLight();
                     }
 
-                    // Crucifijo en slot 2
                     if (hasCrucifix && currentSlot == 1 && Input.GetMouseButtonDown(0) && entity.currentState == "Hostil")
                     {
                         entity.RepelWithCrucifix(transform);
@@ -124,6 +147,9 @@ public class PlayerInteraction : MonoBehaviour
         }
         else
         {
+            if (corralUI != null)
+                corralUI.Hide();
+
             if (interactionText != null)
                 interactionText.text = "";
         }
@@ -143,6 +169,21 @@ public class PlayerInteraction : MonoBehaviour
         if (interactionText != null)
         {
             interactionText.text = "";
+        }
+    }
+    void ToggleCursor()
+    {
+        cursorUnlocked = !cursorUnlocked;
+
+        if (cursorUnlocked)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
     }
 }
