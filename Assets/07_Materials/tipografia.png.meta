@@ -1,0 +1,445 @@
+fileFormatVersion: 2
+guid: 6ee6645966dce4143a612849975e8df6
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: tipografia_0
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 639
+        width: 752
+        height: 535
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3141b61a02e1a548af60a4873d52c3e
+      internalID: 2061807795
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tipografia_1
+      rect:
+        serializedVersion: 2
+        x: 840
+        y: 632
+        width: 774
+        height: 546
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 713ad480cbb8d72499b4aa6bbb00db05
+      internalID: -1579488207
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tipografia_2
+      rect:
+        serializedVersion: 2
+        x: 1652
+        y: 645
+        width: 748
+        height: 532
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7eac5fd3065665a469d0357cb92716a4
+      internalID: -1202527762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tipografia_31
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 57
+        width: 484
+        height: 406
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a36fb9ed68d8324eafad41ac5724775
+      internalID: -602585142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tipografia_32
+      rect:
+        serializedVersion: 2
+        x: 613
+        y: 361
+        width: 751
+        height: 88
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d892bc1cfb85dc44901070446733756
+      internalID: -2091060799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tipografia_34
+      rect:
+        serializedVersion: 2
+        x: 1879
+        y: 270
+        width: 464
+        height: 219
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 703cac24d397e894db1521159c8995d1
+      internalID: -910618946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tipografia_37
+      rect:
+        serializedVersion: 2
+        x: 1023
+        y: 283
+        width: 51
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cd5604ff6ac3e2f4881e77768d13cf1b
+      internalID: 642566874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tipografia_39
+      rect:
+        serializedVersion: 2
+        x: 1000
+        y: 77
+        width: 349
+        height: 164
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f719f89ac1af70d4c90f4523fc826153
+      internalID: -365566340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tipografia_41
+      rect:
+        serializedVersion: 2
+        x: 1988
+        y: 165
+        width: 208
+        height: 88
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b05ea8eb057f9d8448c190fa1321ed4a
+      internalID: 1762043738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tipografia_42
+      rect:
+        serializedVersion: 2
+        x: 2209
+        y: 184
+        width: 41
+        height: 67
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f92f7bcf9a7f62943a9d84311559e373
+      internalID: 1682392012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tipografia_45
+      rect:
+        serializedVersion: 2
+        x: 2312
+        y: 102
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 91c0744b3347e9044b7e8e6eab5872d3
+      internalID: 1191600376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tipografia_4
+      rect:
+        serializedVersion: 2
+        x: 601
+        y: 70
+        width: 327
+        height: 175
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0dab193cf428dd48a2f6947f396d512
+      internalID: -1846318644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 7def454ffa4882249ae810a8ad16de84
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      tipografia_0: 2061807795
+      tipografia_1: -1579488207
+      tipografia_10: -767210905
+      tipografia_11: 1638246139
+      tipografia_12: 822769770
+      tipografia_13: 460197779
+      tipografia_14: 848166212
+      tipografia_15: 1953588596
+      tipografia_16: -108565741
+      tipografia_17: -1439821382
+      tipografia_18: 1853759717
+      tipografia_19: 139372491
+      tipografia_2: -1202527762
+      tipografia_20: -2116462464
+      tipografia_21: 1259225525
+      tipografia_22: 495619778
+      tipografia_23: -1024258463
+      tipografia_24: 1581457152
+      tipografia_25: 1574726736
+      tipografia_26: -1040807039
+      tipografia_27: 2072077024
+      tipografia_28: -2040412409
+      tipografia_29: 1708497254
+      tipografia_3: -635701506
+      tipografia_30: 1290445547
+      tipografia_31: -602585142
+      tipografia_32: -2091060799
+      tipografia_33: -1851786591
+      tipografia_34: -910618946
+      tipografia_35: 896781232
+      tipografia_36: -1891393152
+      tipografia_37: 642566874
+      tipografia_38: 1236886987
+      tipografia_39: -365566340
+      tipografia_4: -1846318644
+      tipografia_40: -714975731
+      tipografia_41: 1762043738
+      tipografia_42: 1682392012
+      tipografia_43: -2069209737
+      tipografia_44: 665396672
+      tipografia_45: 1191600376
+      tipografia_46: -2107516943
+      tipografia_47: 1595483880
+      tipografia_48: 2137020338
+      tipografia_49: 772226652
+      tipografia_5: 928003702
+      tipografia_50: 2051253262
+      tipografia_51: -1987156228
+      tipografia_52: 1885587352
+      tipografia_53: -369079739
+      tipografia_54: 1339042102
+      tipografia_55: 1572253656
+      tipografia_56: -557224641
+      tipografia_57: 1548707456
+      tipografia_58: 944660778
+      tipografia_59: 843285945
+      tipografia_6: 143182025
+      tipografia_60: -1324530016
+      tipografia_61: -846780797
+      tipografia_7: -372092921
+      tipografia_8: -1228324155
+      tipografia_9: 2062048888
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

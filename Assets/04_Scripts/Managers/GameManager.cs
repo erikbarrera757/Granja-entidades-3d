@@ -42,6 +42,30 @@ public class GameManager : MonoBehaviour
 
     public int food = 3;
 
+    public AudioSource fearAudio;
+    public float fearFadeSpeed = 2f;
+    public AudioSource playerPainAudio;
+
+    public int entityFood = 0;
+    public TextMeshProUGUI entityFoodText;
+
+    public void AddEntityFood(int amount)
+    {
+        entityFood += amount;
+        UpdateUI();
+    }
+
+    public bool UseEntityFood(int amount)
+    {
+        if (entityFood >= amount)
+        {
+            entityFood -= amount;
+            UpdateUI();
+            return true;
+        }
+
+        return false;
+    }
     public void AddFood(int amount)
     {
         food += amount;
@@ -117,6 +141,28 @@ public class GameManager : MonoBehaviour
                 damageFlashImage.color = c;
             }
         }
+        if (fearAudio != null)
+        {
+            bool hasHostiles = hostileEntities.Count > 0;
+
+            float targetVolume = hasHostiles ? 0.7f : 0f;
+
+            fearAudio.volume = Mathf.Lerp(
+                fearAudio.volume,
+                targetVolume,
+                Time.unscaledDeltaTime * fearFadeSpeed
+            );
+
+            if (hasHostiles && !fearAudio.isPlaying)
+            {
+                fearAudio.Play();
+            }
+
+            if (!hasHostiles && fearAudio.volume < 0.01f && fearAudio.isPlaying)
+            {
+                fearAudio.Stop();
+            }
+        }
     }
 
     public void AddEnergy(int amount)
@@ -136,7 +182,11 @@ public class GameManager : MonoBehaviour
         stability -= amount;
         if (stability < 0) stability = 0;
 
-        // NUEVO: activar flash
+        if (playerPainAudio != null)
+        {
+            playerPainAudio.Stop();
+            playerPainAudio.Play();
+        }
         damageFlashTimer = damageFlashDuration;
 
         UpdateUI();
@@ -151,10 +201,17 @@ public class GameManager : MonoBehaviour
     {
         isGameOver = true;
 
-        if (gameOverText != null) gameOverText.SetActive(true);
-        if (restartText != null) restartText.SetActive(true);
+        GameOverUI gameOverUI = FindFirstObjectByType<GameOverUI>();
 
-        Time.timeScale = 0f;
+        if (gameOverUI != null)
+        {
+            gameOverUI.ShowGameOver();
+        }
+        else
+        {
+            Debug.Log("No se encontró GameOverUI en la escena");
+        }
+
         Debug.Log("GAME OVER");
     }
 
@@ -178,7 +235,7 @@ public class GameManager : MonoBehaviour
     public void UpdateUI()
     {
         if (energyText != null)
-            energyText.text = "Energía Total: " + totalEnergy;
+            energyText.text = " " + totalEnergy;
 
         if (stabilityText != null)
             stabilityText.text = "Estabilidad: " + stability;
@@ -195,6 +252,8 @@ public class GameManager : MonoBehaviour
             else
                 stabilityFillImage.color = Color.red;
         }
+        if (entityFoodText != null)
+            entityFoodText.text = "Comida entidades: " + entityFood;
     }
 
     public void ShowWarning(string message)
@@ -308,5 +367,19 @@ public class GameManager : MonoBehaviour
 
         return false;
     }
+    public bool IsGameOver()
+    {
+        return isGameOver;
+    }
+    public void HealStability(int amount)
+    {
+        if (isGameOver) return;
 
+        stability += amount;
+
+        if (stability > 100)
+            stability = 100;
+
+        UpdateUI();
+    }
 }

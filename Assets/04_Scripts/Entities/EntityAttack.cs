@@ -8,6 +8,7 @@ public class EntityAttack : MonoBehaviour
 
     private float lastAttackTime;
     private Transform player;
+    private EntityStatus status;
 
     void Start()
     {
@@ -17,14 +18,13 @@ public class EntityAttack : MonoBehaviour
         {
             player = playerObj.transform;
         }
+
+        status = GetComponent<EntityStatus>();
     }
 
     void Update()
     {
-        if (player == null) return;
-
-        EntityStatus status = GetComponent<EntityStatus>();
-        if (status == null) return;
+        if (player == null || status == null) return;
 
         if (status.currentState != "Hostil") return;
 
@@ -32,22 +32,13 @@ public class EntityAttack : MonoBehaviour
 
         if (distance <= attackDistance && Time.time >= lastAttackTime + attackCooldown)
         {
-            GameManager.Instance.LoseStability(damage);
-
-            CharacterController cc = player.GetComponent<CharacterController>();
-
-            if (cc != null)
+            if (GameManager.Instance != null)
             {
-                cc.enabled = false;
-                player.position = new Vector3(0, 1, 0);
-                cc.enabled = true;
-            }
-            else
-            {
-                player.position = new Vector3(0, 1, 0);
+                GameManager.Instance.LoseStability(damage);
             }
 
             lastAttackTime = Time.time;
+
             Debug.Log("La entidad atacó al jugador.");
         }
     }

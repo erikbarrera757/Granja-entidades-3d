@@ -17,6 +17,12 @@ public class PlayerInteraction : MonoBehaviour
     private string temporaryMessage = "";
     private bool showingTemporaryMessage = false;
     private bool cursorUnlocked = false;
+
+    public int smallFoodCount = 0;
+    public int mediumFoodCount = 0;
+    public int largeFoodCount = 0;
+
+    public AudioSource eatAudio;
     void Awake()
     {
         Instance = this;
@@ -41,7 +47,42 @@ public class PlayerInteraction : MonoBehaviour
         if (hotbarUI != null)
         {
             currentSlot = hotbarUI.GetSelectedSlot();
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (GameManager.Instance.stability >= 100)
+                {
+                    Debug.Log("La vida ya está llena.");
+                    return;
+                }
+
+                if (currentSlot == 2 && smallFoodCount > 0)
+                {
+                    smallFoodCount--;
+                    GameManager.Instance.HealStability(10);
+
+                    if (eatAudio != null)
+                        eatAudio.Play();
+                }
+                else if (currentSlot == 3 && mediumFoodCount > 0)
+                {
+                    mediumFoodCount--;
+                    GameManager.Instance.HealStability(25);
+
+                    if (eatAudio != null)
+                        eatAudio.Play();
+                }
+                else if (currentSlot == 4 && largeFoodCount > 0)
+                {
+                    largeFoodCount--;
+                    GameManager.Instance.HealStability(50);
+
+                    if (eatAudio != null)
+                        eatAudio.Play();
+                }
+            }
         }
+
 
         // Linterna solo funciona si está en el slot 1
         if (flashlight != null)
@@ -76,7 +117,7 @@ public class PlayerInteraction : MonoBehaviour
                 if (interactionText != null)
                     interactionText.text = "";
 
-                return;
+               return;
             }
             else
             {
@@ -92,12 +133,7 @@ public class PlayerInteraction : MonoBehaviour
                 if (entity != null)
                 {
                     string actionsText =
-                        entity.entityName +
-                        "\nEstado: " + entity.currentState +
-                        "\nHambre: " + entity.hunger +
-                        "\nPeligro: " + entity.danger +
-                        "\nEnergía: " + entity.energyStored +
-                        "\n[E] Alimentar" +
+                        "[E] Alimentar" +
                         "\n[R] Extraer energía";
 
                     if (hasFlashlight && currentSlot == 0)
@@ -157,19 +193,36 @@ public class PlayerInteraction : MonoBehaviour
 
     public void ShowTemporaryMessage(string message)
     {
-        temporaryMessage = message;
-        showingTemporaryMessage = true;
+        StopAllCoroutines();
+        StartCoroutine(TemporaryMessageRoutine(message));
     }
 
-    public void HideTemporaryMessage()
+    private System.Collections.IEnumerator TemporaryMessageRoutine(string message)
     {
+        showingTemporaryMessage = true;
+        temporaryMessage = message;
+
+        if (interactionText != null)
+            interactionText.text = temporaryMessage;
+
+        yield return new WaitForSeconds(2f);
+
         temporaryMessage = "";
         showingTemporaryMessage = false;
 
         if (interactionText != null)
-        {
             interactionText.text = "";
-        }
+    }
+
+    public void HideTemporaryMessage()
+    {
+        StopAllCoroutines();
+
+        temporaryMessage = "";
+        showingTemporaryMessage = false;
+
+        if (interactionText != null)
+            interactionText.text = "";
     }
     void ToggleCursor()
     {

@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections;
+using UnityEngine.UI;
 
 public class EntityStatus : MonoBehaviour
 {
@@ -11,9 +13,17 @@ public class EntityStatus : MonoBehaviour
 
     public float timer = 0f;
     public float interval = 5f;
+
     public Corral currentCorral;
+    public GameObject hungerWarningIcon;
+    public Animator entityAnimator;
+    public bool isDead = false;
+
     private Renderer entityRenderer;
 
+    public Slider hungerBar;
+    public Slider dangerBar;
+    public TMPro.TextMeshProUGUI energyText;
     public LightReactionType lightReaction = LightReactionType.Calm;
 
     public enum LightReactionType
@@ -25,11 +35,17 @@ public class EntityStatus : MonoBehaviour
     void Start()
     {
         entityRenderer = GetComponent<Renderer>();
+
+        if (hungerWarningIcon != null)
+            hungerWarningIcon.SetActive(false);
+
         UpdateState();
     }
 
     void Update()
     {
+        if (isDead) return;
+
         timer += Time.deltaTime;
 
         if (timer >= interval)
@@ -41,9 +57,17 @@ public class EntityStatus : MonoBehaviour
 
     public void Feed()
     {
-        if (!GameManager.Instance.UseFood(1))
+        if (isDead) return;
+        if (GameManager.Instance == null) return;
+
+        if (!GameManager.Instance.UseEntityFood(1))
         {
-            Debug.Log("No tienes comida");
+            if (PlayerInteraction.Instance != null)
+            {
+                PlayerInteraction.Instance.ShowTemporaryMessage("No tienes comida para entidades");
+            }
+
+            Debug.Log("No tienes comida para entidades");
             return;
         }
 
@@ -57,20 +81,19 @@ public class EntityStatus : MonoBehaviour
         }
 
         UpdateState();
+
         Debug.Log(entityName + " fue alimentada.");
     }
 
     public int ExtractEnergy()
     {
+        if (isDead) return 0;
+
         if (energyStored > 0)
         {
-            int extracted = 10;
-            energyStored -= extracted;
+            int extracted = energyStored;
+            energyStored = 0;
 
-            if (energyStored < 0)
-                energyStored = 0;
-
-            // Extraer energía tiene más riesgo de noche
             if (DayNightCycle.Instance != null && DayNightCycle.Instance.IsNight)
             {
                 danger += 15;
@@ -83,7 +106,8 @@ public class EntityStatus : MonoBehaviour
             if (danger > 100) danger = 100;
 
             UpdateState();
-            Debug.Log("Extrajiste energía de " + entityName);
+
+            Debug.Log("Extrajiste toda la energía de " + entityName + ": " + extracted);
             return extracted;
         }
 
@@ -93,45 +117,59 @@ public class EntityStatus : MonoBehaviour
 
     public void IncreaseNeeds()
     {
-        bool isNight = DayNightCycle.Instance != null && DayNightCycle.Instance.IsNight;
-        int dangerIncrease = 10;
-        int energyIncrease = 2;
+        if (isDead) return;
 
-        if (currentCorral != null)
-        {
-            if (currentCorral.level == 2)
-            {
-                dangerIncrease -= 3; // menos peligro
-            }
-            else if (currentCorral.level == 3)
-            {
-                energyIncrease += 5; // más producción
-            }
-        }
+        bool isNight = DayNightCycle.Instance != null && DayNightCycle.Instance.IsNight;
+
         if (isNight)
         {
-            // NOCHE: se vuelven peligrosas y hambrientas
-            hunger += 15;
+            hunger += 10;
             if (hunger > 100) hunger = 100;
 
-            danger += 10;
+            if (hunger >= 100)
+            {
+                Die();
+                return;
+            }
+
+            int dangerGain = 10;
+
+            if (currentCorral != null && currentCorral.level >= 2)
+            {
+                dangerGain -= 3;
+            }
+
+            if (dangerGain < 0)
+                dangerGain = 0;
+
+            danger += dangerGain;
             if (danger > 100) danger = 100;
 
-            // De noche producen poco
             energyStored += 2;
             if (energyStored > 100) energyStored = 100;
         }
         else
         {
-            // DÍA: están tranquilas
-            hunger -= 10;
-            if (hunger < 0) hunger = 0;
+            hunger += 5;
+            if (hunger > 100) hunger = 100;
+
+            if (hunger >= 100)
+            {
+                Die();
+                return;
+            }
 
             danger -= 15;
             if (danger < 0) danger = 0;
 
-            // De día producen más energía
-            energyStored += 10;
+            int energyGain = 10;
+
+            if (currentCorral != null && currentCorral.level >= 3)
+            {
+                energyGain = 20;
+            }
+
+            energyStored += energyGain;
             if (energyStored > 100) energyStored = 100;
         }
 
@@ -140,6 +178,17 @@ public class EntityStatus : MonoBehaviour
 
     void UpdateState()
     {
+        if (energyText != null)
+        {
+            energyText.text = "Energía: " + energyStored;
+        }
+        if (hungerBar != null)
+            hungerBar.value = hunger;
+
+        if (dangerBar != null)
+            dangerBar.value = danger;
+        if (isDead) return;
+
         bool isNight = DayNightCycle.Instance != null && DayNightCycle.Instance.IsNight;
 
         if (!isNight)
@@ -160,6 +209,11 @@ public class EntityStatus : MonoBehaviour
             {
                 currentState = "Calmada";
             }
+        }
+
+        if (hungerWarningIcon != null)
+        {
+            hungerWarningIcon.SetActive(currentState == "Hambrienta");
         }
 
         UpdateColor();
@@ -205,8 +259,51 @@ public class EntityStatus : MonoBehaviour
         }
     }
 
+    void Die()
+    {
+        if (isDead) return;
+
+        isDead = true;
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.UnregisterHungryEntity(entityName);
+            GameManager.Instance.UnregisterHostileEntity(entityName);
+        }
+
+        if (currentCorral != null)
+        {
+            currentCorral.RemoveEntity(gameObject);
+        }
+
+        if (hungerWarningIcon != null)
+        {
+            hungerWarningIcon.SetActive(false);
+        }
+
+        Debug.Log(entityName + " murió por hambre.");
+        if (entityAnimator != null)
+        {
+            EntityMovement movement = GetComponent<EntityMovement>();
+            if (movement != null)
+            {
+                movement.canMove = false;
+            }
+
+            EntityAttack attack = GetComponent<EntityAttack>();
+            if (attack != null)
+            {
+                attack.enabled = false;
+            }
+            entityAnimator.SetTrigger("die");
+        }
+        StartCoroutine(DeathRoutine());
+    }
+
     public void RepelWithCrucifix(Transform player)
     {
+        if (isDead) return;
+
         danger -= 35;
         if (danger < 0) danger = 0;
 
@@ -219,11 +316,14 @@ public class EntityStatus : MonoBehaviour
         transform.position += pushDirection * 2.5f;
 
         UpdateState();
+
         Debug.Log(entityName + " fue repelida con el crucifijo.");
     }
 
     public void ReactToLight()
     {
+        if (isDead) return;
+
         if (currentState == "Hostil")
         {
             if (lightReaction == LightReactionType.Calm)
@@ -239,5 +339,11 @@ public class EntityStatus : MonoBehaviour
 
             UpdateState();
         }
+    }
+    System.Collections.IEnumerator DeathRoutine()
+    {
+        yield return new WaitForSeconds(3f);
+
+        Destroy(gameObject);
     }
 }
